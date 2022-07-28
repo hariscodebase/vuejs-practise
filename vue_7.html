@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	
+		<title>J1 Practice</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<style>
+			.formfield{margin-bottom:10px;}
+		</style>
+	</head>
+	<body>
+	<p>Dog Treats Problem. <a href="https://cemc.uwaterloo.ca/contests/computing/2020/index.html">from the J1 problem hosted by the CCC.</a></p>
+	<div id="app">
+		<div class="formfield">
+			<label>Small Treats: <label> <input v-model="treat_qty_small">
+		</div>
+		<div class="formfield">
+			<label>Medium Treats: <label> <input v-model="treat_qty_medium">
+		</div>
+		<div class="formfield">
+			<label>Large Treats: <label> <input v-model="treat_qty_large">
+		</div>
+		<div id="result">
+			<div><label>show diagnostics:</label><input type="checkbox" v-model="treat_diagnostics"></div>
+			<div v-if="treat_diagnostics">Treat Total: {{treat_total}}</div>
+			<div v-if="treat_diagnostics">Is_Happy: {{is_happy}}</div>
+			<span v-if="is_happy">{{dog_name}} is Happy!</span>
+			<span v-else>{{dog_name}} is sad..</span>
+		</div>
+	</div>
+	
+	<script>
+	var app = new Vue({
+		el: '#app',
+		data:{
+			treat_diagnostics:false,
+			dog_name:"Barley",
+			treat_qty_small:0,
+			treat_qty_medium:0,
+			treat_qty_large:0,
+			treat_value_small:1,
+			treat_value_medium:2,
+			treat_value_large:3
+		},
+		computed:{
+			treat_total:function(){
+				return (this.treat_qty_small * this.treat_value_small) + 
+				(this.treat_qty_medium * this.treat_value_medium) + 
+				(this.treat_qty_large * this.treat_value_large);	
+			},
+			is_happy:function(){
+				
+				return this.treat_total>=10;	
+			}
+		}
+	});
+	
+	</script>
+
+<p>Winning Score. <a href="https://cemc.uwaterloo.ca/contests/computing/2019/stage%201/juniorEF.pdf">Problem J1</a></p>
+<div id="winningScoreApp">
+	<div class="formfield">
+		<label>3-point shot by Apples: <label> <input v-model="threePointer_Apples"> 
+	</div>
+	<div class="formfield">
+		<label>2-point field goal by Apples: <label> <input v-model="twoPointer_Apples">
+	</div>
+	<div class="formfield">
+		<label>1-point free throw by Apples: <label> <input v-model="onePointer_Apples">
+	</div>
+	<div class="formfield">
+		<label>3-point shot by Bananas: <label> <input v-model="threePointer_Bananas">
+	</div>
+	<div class="formfield">
+		<label>2-point field goal by Bananas: <label> <input v-model="twoPointer_Bananas">
+	</div>
+	<div class="formfield">
+		<label>1-point free throw by Bananas: <label> <input v-model="onePointer_Bananas">
+	</div>
+
+	<div id="score_card">
+		<div><label>show diagnostics:</label><input type="checkbox" v-model="treat_diagnostics"></div>
+		<div v-if="treat_diagnostics">Total score (Apples): {{total_score_Apples}}</div>
+		<div v-if="treat_diagnostics">Total score (Bananas): {{total_score_Bananas}}</div>
+		<span v-if="total_score_Apples > 0 || total_score_Bananas > 0">{{score_card}}</span>
+		<span v-else>No scores yet.</span>
+	</div>
+</div>
+
+<script>
+	var winningScoreApp = new Vue({
+		el: '#winningScoreApp',
+		data:{
+			treat_diagnostics:false,
+			threePointer_Apples:0,
+			twoPointer_Apples:0,
+			onePointer_Apples:0,
+			threePointer_Bananas:0,
+			twoPointer_Bananas:0,
+			onePointer_Bananas:0
+		},
+		computed:{
+			total_score_Apples:function(){
+				return (this.threePointer_Apples * 3) + 
+				(this.twoPointer_Apples * 2) + 
+				(this.onePointer_Apples * 1);	
+			},
+			total_score_Bananas:function(){
+				return (this.threePointer_Bananas * 3) + 
+				(this.twoPointer_Bananas * 2) + 
+				(this.onePointer_Bananas * 1);	
+			},
+			score_card:function(){
+				if(this.total_score_Apples === this.total_score_Bananas) {
+					return "T - Game Tied.";
+				} else if (this.total_score_Apples > this.total_score_Bananas) {
+					return "A - The Apples won!";
+				} else {
+					return "B - The Bananas won!";
+				}
+			}
+		}
+	});
+	</script>
+
+	<!--
+		v-model will allow you to quickly bind form elements to the data property.
+		Make sure to set a default value!
+		The Computed property can be used like data, except for values that are calculated from data properties.
+		In this example 'treat_total' is computed from data properties, and 'is_happy' is computed from 'treat_total'.
+		
+		ASYNCHRONOUS LEARNING EXERCISE : J1
+		- Find any J1 problem
+		- Imagine an interface that allows the user to enter data on the webpage
+		- Build using v-model and computed properties!
+	
+	-->
+	</body>
+</html>
